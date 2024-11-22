@@ -79,4 +79,32 @@ window.onload = async () => {
     return i;
   }
 
+  // Select the wheel-wrapper element
+const wheelWrapper = document.querySelector('.wheel-wrapper');
+
+// Set the background image dynamically
+wheelWrapper.style.backgroundImage = 'url("./img/mbi.png")';
+wheelWrapper.style.backgroundSize = 'cover';
+wheelWrapper.style.backgroundPosition = 'center';
+wheelWrapper.style.backgroundRepeat = 'no-repeat';
+// Select canvas or initialize the wheel inside `.wheel-wrapper`
+const canvas = document.createElement('canvas');
+canvas.width = 800; // Adjust width
+canvas.height = 800; // Adjust height
+
+// Append the canvas to .wheel-wrapper
+wheelWrapper.appendChild(canvas);
+
+const ctx = canvas.getContext('2d');
+
+// Draw the background image onto the canvas
+const background = new Image();
+background.src = './img/wheel-background.png'; // Your image path
+background.onload = () => {
+    ctx.drawImage(background, 0, 0, canvas.width, canvas.height); // Fit image to canvas
+};
+
+// Proceed with drawing the wheel on the same canvas...
+
+
 };

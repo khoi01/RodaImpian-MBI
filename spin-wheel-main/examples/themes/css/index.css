@@ -40,6 +40,19 @@ body {
   overflow: hidden;
   height: 100%;
   width: 100%;
+  background-image: url('./img/wheel-background.png'); /* Path to your background image */
+    background-size: cover; /* Ensures the image scales to cover the wrapper */
+    background-position: center; /* Center the background image */
+    background-repeat: no-repeat; /* Prevent tiling */
+    position: relative; /* Wrapper layer */
+    z-index: 1;
+}
+
+.wheel-wrapper canvas {
+  position: absolute; /* Ensure the canvas is above the background */
+  top: 0;
+  left: 0;
+  z-index: 1; /* Canvas should stack above the background */
 }
 
 .gui-wrapper {
@@ -55,6 +68,15 @@ body {
   flex-direction:row;
   gap: 10px;
   align-items: center;
+}
+
+.gui-wrapper .logo {
+  position: absolute;
+  top: 17px; /* Adjust distance from the top */
+  right: 25px; /* Adjust distance from the right */
+  width: 50px; /* Set the size of the logo */
+  height: auto; /* Maintain aspect ratio */
+  z-index: 10; /* Ensure it appears above other elements */
 }
 
 select {
