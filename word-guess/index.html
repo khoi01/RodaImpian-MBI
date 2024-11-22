@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Word Guess Game</title>
+  <title>Roda Impian @ MBI</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -14,29 +14,30 @@
       <div id="question-buttons"></div>
     </div>
 
+    <!-- Start Screen -->
+    <div id="start-screen" class="start-screen">
+      <img src="logo_mbi.png" alt="Logo" class="logo">
+      <h1>Selamat Datang ke Roda Impian!</h1>
+      <p>Klik pada butang soalan di sebelah kiri untuk memulakan permainan.</p>
+    </div>
+
     <!-- Right Game Area -->
-    <div class="game-container">
-      <h1>RODA IMPIAN @ MBI</h1>
+    <div id="game-container" class="game-container">
+      <div class="heading">
+        <h1>
+          <img src="logo_mbi.png" alt="Logo" class="logo">
+          RODA IMPIAN @ MBI
+        </h1>
+        <div class="actions">
+          <button id="reveal-button">PAPAR PERKATAAN</button>
+        </div>
+      </div>
+      <div id="question-text" class="question-text"></div>
       <div id="hint-box" class="hint-box"></div>
       <div id="sentence-box" class="word-box"></div>
       <div class="controls">
-        <input type="text" id="letter-input" maxlength="1" placeholder="Enter a letter">
+        <input type="text" id="letter-input" maxlength="1" placeholder="Sila letak satu huruf">
         <button id="check-button">SEMAK HURUF</button>
-      </div>
-      <br>      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-
-      <div class="actions">
-        <button id="reveal-button">PAPAR PERKATAAN</button styles="">
       </div>
       <p id="game-message"></p>
     </div>

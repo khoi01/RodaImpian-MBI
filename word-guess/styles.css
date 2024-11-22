@@ -12,10 +12,13 @@ body {
 .container {
   display: flex;
   width: 100%;
+  height: 100%;
 }
 
 /* Menu styles */
 .menu {
+  display: flex;
+  flex-direction: column;
   width: 25%;
   background-color: #f4f4f4;
   padding: 20px;
@@ -37,8 +40,8 @@ body {
 #question-buttons button {
   padding: 10px;
   font-size: 16px;
-  border: none;
   background-color: #007bff;
+  border: none;
   color: white;
   border-radius: 5px;
   cursor: pointer;
@@ -46,19 +49,68 @@ body {
   transition: background-color 0.3s ease;
 }
 
+#question-buttons button.correct {
+  background-color: green;
+}
+
 #question-buttons button:hover {
   background-color: #0056b3;
 }
 
+
 /* Game area styles */
+.start-screen {
+    width: 85%;
+    min-height: 100vh;
+    background-image: url('mbi.png'); 
+    background-size: cover; /* cover semua .game-container */
+    background-position: center;
+    text-align: center;
+    padding: 20px; 
+    color: white;
+}
+
+.logo {
+  width: 50px;
+  height: auto;
+  vertical-align: middle;
+  margin-right: 10px;
+  margin-bottom: 13px;
+}
+
 .game-container {
-  width: 75%;
-  padding: 20px;
+  display: none;
+  width: 85%;
+  min-height: 100vh;
+  background-image: url('mbi.png'); 
+  background-size: cover; /* cover semua .game-container */
+  background-position: center;
+  padding: 20px; 
+  color: white;
+}
+
+.heading {
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
 }
 
 h1 {
   margin-bottom: 20px;
-  color: #333;
+  color: #dfdfdf;
+}
+
+.actions {
+  margin-bottom: 20px;
+}
+
+.question-text {
+  font-size: 25px;
+  font-weight: bold;
+  padding-top: 15px;
+  padding-bottom: 20px;
+  text-align: center;
+  text-shadow: 8px 5px 8px rgba(0, 0, 0, 8); 
 }
 
 /* Word box styling */
@@ -100,10 +152,10 @@ h1 {
 
 /* Hint box styling */
 .hint-box {
-  margin-bottom: 15px;
+  margin-bottom: 22px;
   font-size: 18px;
   font-weight: bold;
-  color: #555;
+  color: black;
   background: #f9f9f9;
   border: 2px dashed #ddd;
   padding: 10px;
@@ -112,11 +164,10 @@ h1 {
 }
 
 /* Controls and actions styling */
-.controls, .actions {
-  margin-bottom: 15px;
+.controls {
   display: flex;
   justify-content: center;
-  gap: 10px;
+  gap: 1px;
 }
 
 input#letter-input {
@@ -143,10 +194,17 @@ button:hover {
   background: #0056b3;
 }
 
+.controls button:disabled {
+  background-color: #cccccc; /* Grey background for disabled state */
+  color: #666666; /* Darker grey text color */
+  cursor: not-allowed; /* Change cursor to indicate it's not clickable */
+}
+
 #game-message {
-  margin-top: 20px;
-  font-size: 18px;
+  padding-top: 40px;
+  text-shadow: 8px 5px 8px rgba(0, 0, 0, 8);
+  font-size: 20px;
   font-weight: bold;
-  color: #333;
+  color: white;
   text-align: center;
 }

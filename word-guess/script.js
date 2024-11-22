@@ -1,13 +1,9 @@
-const sentencesWithHints = [
-    { sentence: "BAGAI AUR DENGAN TEBING", hint: "PERIBAHASA" },
-    { sentence: "PULAU MANUKAN", hint: "NAMA TEMPAT" },
-    { sentence: "PUTERI DUA SEBILIK", hint: "PENCUCI MULUT" },
-    { sentence: "DI MANA ADA KEMAHUAN DI SITU ADA JALAN", hint: "PETIKAN" },
-  ];
-  
+  let sentencesWithHints = [];
   let currentSentence = "";
   let currentHint = "";
   let guessedSentence = [];
+  let guessedLetters = new Set();
+
   
   // DOM Elements
   const questionButtons = document.getElementById("question-buttons");
@@ -18,18 +14,27 @@ const sentencesWithHints = [
   const revealButton = document.getElementById("reveal-button");
   const gameMessage = document.getElementById("game-message");
   
-  // Create buttons for each question
+  // Fetch the sentences from the JSON file
+fetch('questions.json')
+.then(response => response.json())
+.then(data => {
+    sentencesWithHints = data;
+    createQuestionButtons(); // Create buttons lepas data JSON difetch
+})
+.catch(error => console.error('Error fetching the JSON:', error));
+
+  // Create buttons untuk setiap soalan
   function createQuestionButtons() {
     sentencesWithHints.forEach((item, index) => {
       const button = document.createElement("button");
-      button.textContent = `Question ${index + 1}:`;
+      button.textContent = `Soalan ${index + 1}: ${item.hint}`;
       button.dataset.index = index;
       button.addEventListener("click", () => initializeGame(index));
       questionButtons.appendChild(button);
     });
   }
   
-  // Initialize the selected sentence
+  // Initialize soalan
   function initializeGame(index) {
     currentSentence = sentencesWithHints[index].sentence;
     currentHint = sentencesWithHints[index].hint;
@@ -38,9 +43,19 @@ const sentencesWithHints = [
       char === " " ? " " : "_"
     );
   
+    guessedLetters.clear();
     displaySentence();
     displayHint();
-    gameMessage.textContent = "Guess the sentence!";
+    const questionText = document.getElementById("question-text");
+    questionText.textContent = `Soalan: ${index + 1}`;
+
+  // Hide start screen and show game elements
+  document.getElementById("start-screen").style.display = "none";
+  document.getElementById("game-container").style.display = "block";
+  
+
+    gameMessage.textContent = "Teka ayat berikut!";
+    checkButton.disabled = false;
   }
   
   // Display the current state of the sentence
@@ -66,11 +81,15 @@ const sentencesWithHints = [
   // Check if the input letter is in the sentence
   checkButton.addEventListener("click", () => {
     const inputLetter = letterInput.value.toLowerCase();
-    if (!inputLetter) {
-      gameMessage.textContent = "Please enter a letter!";
+    // Check kalau huruf sudah ditulis atau tidak.
+    if (guessedLetters.has(inputLetter)) {
+      gameMessage.textContent = "Huruf itu sudah ditulis!";
+      letterInput.value = ""; // Clear input field
       return;
     }
-  
+    
+  // Tambah huruf yang dah disemak ke quessedLetters
+  guessedLetters.add(inputLetter);
     let isCorrect = false;
     for (let i = 0; i < currentSentence.length; i++) {
       if (currentSentence[i].toLowerCase() === inputLetter) {
@@ -78,26 +97,40 @@ const sentencesWithHints = [
         isCorrect = true;
       }
     }
+
+    const currentButton = questionButtons.querySelector(`button[data-index="${sentencesWithHints.findIndex(item => item.sentence === currentSentence)}"]`);
   
     if (isCorrect) {
-      gameMessage.textContent = "Good job! Keep going!";
+      gameMessage.textContent = "Hebat! Teruskan!";
     } else {
-      gameMessage.textContent = "Wrong guess. Try again!";
+      gameMessage.textContent = "Salah. Cuba lagi!";
     }
   
     displaySentence();
     letterInput.value = "";
   
     if (guessedSentence.join("") === currentSentence) {
-      gameMessage.textContent = "Congratulations! You guessed the sentence!";
+      gameMessage.textContent = "Tahniah! Jawapan anda tepat!";
+      currentButton.classList.add("correct");
+      checkButton.disabled = true;
+
+      
     }
   });
   
   // Reveal the entire sentence
   revealButton.addEventListener("click", () => {
     guessedSentence = currentSentence.split("");
-    displaySentence();
-    gameMessage.textContent = "The sentence is revealed!";
+        // Display ayat bila PAPAR PERKATAAN ditekan.
+        displaySentence();
+        gameMessage.textContent = "Tahniah! Jawapan anda tepat!";
+
+        checkButton.disabled = true;
+
+        // Button tukar hijau bila PAPAR PERKATAAN ditekan.
+        const currentButton = questionButtons.querySelector(`button[data-index="${sentencesWithHints.findIndex(item => item.sentence === currentSentence)}"]`);
+        currentButton.classList.add("correct");
+        
   });
   
   // Create question buttons on page load
